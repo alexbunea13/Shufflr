@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/root/app.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    CommonModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports: [AppComponent]
 })
