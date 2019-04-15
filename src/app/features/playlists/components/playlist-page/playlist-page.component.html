@@ -1,0 +1,26 @@
+<div>
+  Add Playlists
+  <form #form="ngForm" (ngSubmit)="add(form.value)">
+    <div>
+      <label>Playlist Title</label>
+      <input name="title" ngModel/>
+    </div>
+    <div>
+      <label>Songs</label>
+      <textarea name="songs" ngModel></textarea>
+    </div>
+    <button type="submit">Add</button>
+  </form>
+</div>
+<table>
+  <thead>
+    <th>Playlist Title</th>
+    <th>Songs</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let playlist of playlists">
+      <td>{{playlist.title}}</td>
+      <td>{{playlist.songs}}</td>
+    </tr>
+  </tbody>
+</table>
