@@ -1,0 +1,4 @@
+{
+    "/api/*": "$1",
+    "/playlists/:playlistId/songs": "/songs?playlistId=:playlistId"
+}
