@@ -7,14 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaylistPageComponent implements OnInit {
 
-  playlists: any[] = [];
+  songs: any[] = [];
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  add(playlist) {
-    this.playlists.push(playlist);
+  add(song) {
+    this.songs = [{title: song, author: '30 Seconds to Mars'}, ...this.songs];
   }
 }

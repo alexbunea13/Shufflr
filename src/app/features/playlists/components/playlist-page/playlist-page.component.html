@@ -1,26 +1,21 @@
-<div>
-  Add Playlists
+<div class="shuf-container">
   <form #form="ngForm" (ngSubmit)="add(form.value)">
-    <div>
-      <label>Playlist Title</label>
-      <input name="title" ngModel/>
-    </div>
-    <div>
-      <label>Songs</label>
-      <textarea name="songs" ngModel></textarea>
-    </div>
-    <button type="submit">Add</button>
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput name="title" ngModel/>
+        <mat-icon matSuffix>library_music</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Song</mat-label>
+        <input matInput name="song" placeholder="Add Song" ngModel (keydown.enter)="add(form.value.song)"/>
+        <mat-icon matSuffix>add</mat-icon>
+    </mat-form-field>
   </form>
+  <mat-list mat-table>
+    <h3 mat-subheader>Songs</h3>
+    <mat-list-item *ngFor="let song of songs">
+      <h3 mat-line>{{song.title}}</h3>
+      <span mat-line>{{song.author}}</span>
+    </mat-list-item>
+    </mat-list>
 </div>
-<table>
-  <thead>
-    <th>Playlist Title</th>
-    <th>Songs</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let playlist of playlists">
-      <td>{{playlist.title}}</td>
-      <td>{{playlist.songs}}</td>
-    </tr>
-  </tbody>
-</table>
