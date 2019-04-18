@@ -1,4 +1,5 @@
 {
     "/api/*": "$1",
+    "/playlists/:playlistId": "/playlists/:playlistId?_embed=songs",
     "/playlists/:playlistId/songs": "/songs?playlistId=:playlistId"
 }

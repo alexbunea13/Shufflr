@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlaylistPageComponent } from './components/playlist-page/playlist-page.component';
 
 const routes: Routes = [{
-  path: '', component: PlaylistPageComponent
+  path: ':playlistId', component: PlaylistPageComponent
 }];
 
 

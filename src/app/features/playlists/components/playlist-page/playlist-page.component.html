@@ -1,21 +1,21 @@
-<div class="shuf-container">
-  <form #form="ngForm" (ngSubmit)="add(form.value)">
+<div class="shuf-container" *ngIf="playlist | async as playlist">
     <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
-        <input matInput name="title" ngModel/>
+        <input matInput name="title" [ngModel]="playlist.title"/>
         <mat-icon matSuffix>library_music</mat-icon>
     </mat-form-field>
+  <form #form="ngForm" (ngSubmit)="addSong(form.value)">
     <mat-form-field appearance="fill">
         <mat-label>Song</mat-label>
-        <input matInput name="song" placeholder="Add Song" ngModel (keydown.enter)="add(form.value.song)"/>
+        <input matInput name="title" placeholder="Add Song" ngModel/>
         <mat-icon matSuffix>add</mat-icon>
     </mat-form-field>
   </form>
   <mat-list mat-table>
     <h3 mat-subheader>Songs</h3>
-    <mat-list-item *ngFor="let song of songs">
-      <h3 mat-line>{{song.title}}</h3>
-      <span mat-line>{{song.author}}</span>
+    <mat-list-item *ngFor="let song of playlist.songs">
+      <h3 mat-line>{{ song.title }}</h3>
+      <span mat-line>{{ song.author }}</span>
     </mat-list-item>
     </mat-list>
 </div>

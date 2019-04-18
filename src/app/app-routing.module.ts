@@ -5,7 +5,7 @@ const routes: Routes = [{
   path: '', loadChildren: './features/home/home.module#HomeModule'
 },
 {
-  path: 'playlists/new', loadChildren: './features/playlists/playlists.module#PlaylistsModule'
+  path: 'playlists', loadChildren: './features/playlists/playlists.module#PlaylistsModule'
 }];
 
 @NgModule({
