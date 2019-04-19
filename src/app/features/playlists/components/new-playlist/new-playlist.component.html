@@ -1,0 +1,12 @@
+<div class="shuf-container">
+  <form #form="ngForm" (ngSubmit)="add(form.value)">
+    <mat-form-field appearance="fill">
+      <mat-label>Name your awesome playlist</mat-label>
+      <input matInput name="title" placeholder="Playlist Name" ngModel/>
+      <mat-icon matSuffix>add</mat-icon>
+    </mat-form-field>
+  </form>
+  <div class="playlist-title">
+    <h1>{{ form.value.title }}</h1>
+  </div>
+</div>

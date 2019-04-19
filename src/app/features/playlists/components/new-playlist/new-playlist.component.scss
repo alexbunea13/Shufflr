@@ -1,0 +1,15 @@
+:host {
+    margin-top: 16px;
+    display: block;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-title {
+    text-align: -webkit-center;
+    margin-top: 64px;
+    overflow-wrap: break-word;
+}
