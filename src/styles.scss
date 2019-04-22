@@ -31,6 +31,8 @@ $shufflr-theme: mat-light-theme($shufflr-primary, $shufflr-accent, $shufflr-warn
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+body { background-color: #F5F5F6; }
+
 .shuf-container {
     max-width: 1200px;
     margin: 0 auto;

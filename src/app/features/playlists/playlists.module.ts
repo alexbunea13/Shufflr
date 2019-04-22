@@ -5,10 +5,12 @@ import { PlaylistPageComponent } from '../playlists/components/playlist-page/pla
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PlaylistsService } from './services/playlists.service';
 import { SongListComponent } from '../playlists/components/song-list/song-list.component';
-import { NewPlaylistComponent } from './components/new-playlist/new-playlist.component';
+import { NewPlaylistPageComponent } from './components/new-playlist-page/new-playlist-page.component';
+import { PlaylistsPageComponent } from './components/playlists-page/playlists-page.component';
+import { PlaylistListComponent } from './components/playlist-list/playlist-list.component';
 
 @NgModule({
-  declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistComponent],
+  declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistPageComponent, PlaylistsPageComponent, PlaylistListComponent],
   imports: [
     SharedModule,
     PlaylistsRoutingModule

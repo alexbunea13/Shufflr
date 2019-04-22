@@ -4,13 +4,12 @@ import { Router } from '@angular/router';
 
 import { PlaylistsService } from '../../services/playlists.service';
 
-
 @Component({
-  selector: 'shuf-new-playlist',
-  templateUrl: './new-playlist.component.html',
-  styleUrls: ['./new-playlist.component.scss']
+  selector: 'shuf-new-playlist-page',
+  templateUrl: './new-playlist-page.component.html',
+  styleUrls: ['./new-playlist-page.component.scss']
 })
-export class NewPlaylistComponent implements OnInit {
+export class NewPlaylistPageComponent implements OnInit {
 
   addPlaylistEventEmitter = new EventEmitter();
 
@@ -21,8 +20,8 @@ export class NewPlaylistComponent implements OnInit {
     this.addPlaylistEventEmitter.asObservable()
       .pipe(
         switchMap((playlistName => this.playlistsService.add(playlistName)))
-        )
-        .subscribe(() => this.router.navigate(['/playlists']));
+      )
+      .subscribe(() => this.router.navigate(['/playlists']));
    }
 
   ngOnInit(): void {
