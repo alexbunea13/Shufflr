@@ -1,0 +1,23 @@
+:host {
+    margin-top: 16px;
+    display: block;
+}
+
+mat-list{
+    display: grid;
+}
+
+mat-list-item{
+    margin-bottom: 64px;
+    margin-top: 64px;
+}
+
+.playlist-title{
+    margin-bottom: 64px;
+}
+
+.song-box{
+    display: flex;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}

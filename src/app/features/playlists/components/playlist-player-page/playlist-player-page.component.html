@@ -1,0 +1,12 @@
+<div class="shuf-container" *ngIf="playlist | async as playlist">
+  <h1 class="playlist-title">{{playlist.title}}</h1>
+  <mat-list mat-table>
+    <mat-list-item *ngFor="let song of playlist.songs">
+      <div>
+        <img src="{{song.thumbnail}}">
+        <h3 mat-line>{{ song.title }}</h3>
+        <h4 mat-line>{{ song.channelTitle }}</h4>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>
