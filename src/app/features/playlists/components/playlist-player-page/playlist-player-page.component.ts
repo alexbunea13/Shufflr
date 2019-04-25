@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, EventEmitter } from '@angular/core';
 import { switchMap, pluck, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 import { PlaylistsService } from '../../services/playlists.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'shuf-playlist-player-page',
@@ -34,5 +34,4 @@ export class PlaylistPlayerPageComponent implements AfterViewInit {
         this.fetchPlaylist.emit(playlistId);
       });
   }
-
 }
