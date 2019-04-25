@@ -4,11 +4,27 @@
         <input matInput name="title" [ngModel]="playlist.title"/>
         <mat-icon matSuffix>library_music</mat-icon>
     </mat-form-field>
-  <form #form="ngForm" (ngSubmit)="addSong(form.value)">
+  <form #form="ngForm">
     <mat-form-field appearance="fill">
-        <mat-label>Song</mat-label>
-        <input matInput name="title" placeholder="Add Song" ngModel/>
-        <mat-icon matSuffix>add</mat-icon>
+      <mat-label>Song</mat-label>
+      <input
+        #searchSongControl ="ngModel"
+        matInput ngModel
+        name="title" placeholder="Add Song"
+        [matAutocomplete]="auto"
+        (ngModelChange)="searchSong($event)"/>
+      <mat-icon matSuffix>add</mat-icon>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        autoActiveFirstOption
+        (optionSelected)="addSong($event.option.value, searchSongControl);" >
+          <mat-option
+            *ngFor='let matchingSong of matchingSongs | async'
+            [value]="matchingSong"
+            [disabled]="isIncluded(playlist.songs, matchingSong.youtubeId)">
+            {{ matchingSong.title }}
+          </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
   </form>
   <shuf-song-list [songs]="playlist.songs">
