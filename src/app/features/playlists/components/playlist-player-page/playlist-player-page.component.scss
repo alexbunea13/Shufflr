@@ -3,21 +3,11 @@
     display: block;
 }
 
-mat-list{
-    display: grid;
+[matListAvatar] {
+    height: 80px !important;
+    width: 80px !important;
 }
 
-mat-list-item{
-    margin-bottom: 64px;
-    margin-top: 64px;
-}
-
-.playlist-title{
-    margin-bottom: 64px;
-}
-
-.song-box{
-    display: flex;
-    margin-top: 16px;
-    margin-bottom: 16px;
+mat-list-item {
+    height: 112px !important;
 }
