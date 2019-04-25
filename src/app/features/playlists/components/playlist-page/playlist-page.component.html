@@ -19,10 +19,10 @@
         autoActiveFirstOption
         (optionSelected)="addSong($event.option.value, searchSongControl);" >
           <mat-option
-            *ngFor='let songSuggestion of filteredOptions | async'
-            [value]="songSuggestion"
-            [disabled]="isIncluded(playlist.songs, songSuggestion.youtubeId)">
-            {{ songSuggestion.title }}
+            *ngFor='let matchingSong of matchingSongs | async'
+            [value]="matchingSong"
+            [disabled]="isIncluded(playlist.songs, matchingSong.youtubeId)">
+            {{ matchingSong.title }}
           </mat-option>
       </mat-autocomplete>
     </mat-form-field>

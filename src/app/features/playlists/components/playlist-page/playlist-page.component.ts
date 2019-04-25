@@ -28,7 +28,7 @@ export class PlaylistPageComponent implements AfterViewInit {
       map((playlistId: any) => parseInt(playlistId))
     );
 
-  filteredOptions: Observable<any[]>;
+    matchingSongs: Observable<any[]>;
 
   constructor(
     private readonly playlistsService: PlaylistsService,
@@ -48,7 +48,7 @@ export class PlaylistPageComponent implements AfterViewInit {
       .subscribe(playlistId => {
         this.fetchPlaylist.emit(playlistId);
       });
-    this.filteredOptions = this.searchSongEventEmitter.asObservable()
+    this.matchingSongs = this.searchSongEventEmitter.asObservable()
       .pipe(
         debounceTime(500),
         switchMap(newTitle => this.songsService.getAll(newTitle))
@@ -65,6 +65,6 @@ export class PlaylistPageComponent implements AfterViewInit {
   }
 
   isIncluded(songs, id): boolean {
-    return songs.some(song => song.youtubeId === id)
+    return songs.some(song => song.youtubeId === id);
   }
 }
