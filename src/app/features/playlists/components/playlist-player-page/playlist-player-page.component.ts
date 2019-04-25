@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, EventEmitter } from '@angular/core';
-import { switchMap, pluck, map } from 'rxjs/operators';
+import { switchMap, pluck, map, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 import { PlaylistsService } from '../../services/playlists.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'shuf-playlist-player-page',
@@ -12,10 +13,15 @@ import { PlaylistsService } from '../../services/playlists.service';
 export class PlaylistPlayerPageComponent implements AfterViewInit {
 
   fetchPlaylist = new EventEmitter();
+  playerLoaded = new EventEmitter<YT.Player>();
+  selectedSong = new EventEmitter<string>();
 
   playlist = this.fetchPlaylist
     .asObservable()
-    .pipe(switchMap((playlistId) => this.playlistsService.get(playlistId)));
+    .pipe(
+      switchMap((playlistId) => this.playlistsService.get(playlistId)),
+      tap(playlist => this.changeSong(playlist.songs[0].youtubeId))
+    );
 
   playlistId = this.route.paramMap
     .pipe(
@@ -23,7 +29,7 @@ export class PlaylistPlayerPageComponent implements AfterViewInit {
       map((playlistId: any) => parseInt(playlistId))
     );
 
-    constructor(
+  constructor(
     private readonly playlistsService: PlaylistsService,
     private readonly route: ActivatedRoute
   ) { }
@@ -33,5 +39,19 @@ export class PlaylistPlayerPageComponent implements AfterViewInit {
       .subscribe(playlistId => {
         this.fetchPlaylist.emit(playlistId);
       });
+    combineLatest(
+      this.playerLoaded.asObservable(),
+      this.selectedSong.asObservable()
+    ).subscribe(
+      ([player, videoId]) => player.loadVideoById(videoId)
+    );
+  }
+
+  changeSong(youtubeId) {
+    this.selectedSong.emit(youtubeId);
+  }
+
+  playerHasLoaded(player) {
+    this.playerLoaded.emit(player);
   }
 }
