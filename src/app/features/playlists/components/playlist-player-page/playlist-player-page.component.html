@@ -1,7 +1,7 @@
 <div class="shuf-container" *ngIf="playlist">
   <h1 class="playlist-title">{{playlist.title}}</h1>
   <mat-list mat-table>
-    <mat-list-item [ngClass]="{player: first}" *ngFor="let song of playlist.songs; let first = first; let index = index">
+    <mat-list-item [ngClass]="{player: first}" *ngFor="let song of playlist.songs; let first = first; let index = index;">
       <youtube-player *ngIf="first"
         hidden
         [videoId]="song.youtubeId"
@@ -9,9 +9,15 @@
         (ready)="playerHasLoaded($event);">
       </youtube-player>
       <img matListAvatar [src]="song.thumbnail">
-      <mat-progress-bar matLine *ngIf="first" mode="determinate" [value]="progress | async"></mat-progress-bar>
       <h3 (click)="changeSong(index)" matLine>{{song.title}}</h3>
       <p matLine>{{song.channelTitle}}</p>
+      <mat-progress-bar matLine *ngIf="first" mode="determinate" [value]="progress | async"></mat-progress-bar>
+      <button
+        mat-icon-button class="play-button"
+        *ngIf="first"
+        (click)="changeSong(-1)">
+        <mat-icon [inline]="true">skip_previous</mat-icon>
+      </button>
       <button
         mat-icon-button class="play-button"
         *ngIf="first"
@@ -20,6 +26,12 @@
         <ng-template #pause>
           <mat-icon [inline]="true">play_circle_filled</mat-icon>
         </ng-template>
+      </button>
+      <button
+        mat-icon-button class="play-button"
+        *ngIf="first"
+        (click)="changeSong(1)">
+        <mat-icon [inline]="true">skip_next</mat-icon>
       </button>
     </mat-list-item>
   </mat-list>
