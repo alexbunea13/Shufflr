@@ -1,14 +1,26 @@
-<youtube-player
-  (ready)="playerHasLoaded($event)">
-</youtube-player>
-
-<div class="shuf-container" *ngIf="playlist | async as playlist">
+<div class="shuf-container" *ngIf="playlist">
   <h1 class="playlist-title">{{playlist.title}}</h1>
   <mat-list mat-table>
-    <mat-list-item *ngFor="let song of playlist.songs">
+    <mat-list-item [ngClass]="{player: first}" *ngFor="let song of playlist.songs; let first = first; let index = index">
+      <youtube-player *ngIf="first"
+        hidden
+        [videoId]="song.youtubeId"
+        [playerVars]="{ 'autoplay': 1 }"
+        (ready)="playerHasLoaded($event);">
+      </youtube-player>
       <img matListAvatar [src]="song.thumbnail">
-      <h3 (click)="changeSong(song.youtubeId)" matLine>{{song.title}}</h3>
+      <mat-progress-bar matLine *ngIf="first" mode="determinate" [value]="progress | async"></mat-progress-bar>
+      <h3 (click)="changeSong(index)" matLine>{{song.title}}</h3>
       <p matLine>{{song.channelTitle}}</p>
+      <button
+        mat-icon-button class="play-button"
+        *ngIf="first"
+        (click)="togglePlayer()">
+        <mat-icon [inline]="true" *ngIf="isPlaying;else pause" >pause_circle_filled</mat-icon>
+        <ng-template #pause>
+          <mat-icon [inline]="true">play_circle_filled</mat-icon>
+        </ng-template>
+      </button>
     </mat-list-item>
   </mat-list>
 </div>

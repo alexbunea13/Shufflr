@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,17 @@ export class PlaylistsService {
     return this
       .http
       .get(`/api/playlists/${playlistId}`);
+  }
+
+  getPlaylistSongs(playlistId): Observable<any> {
+    return this
+      .http
+      .get(`/api/playlists/${playlistId}/songs`)
+      .pipe(
+        map((response: any) => response.items
+          .map(songsId => (
+            {
+              id: songsId.youtubeId
+            }))));
   }
 }
