@@ -1,9 +1,24 @@
-import { Component, AfterViewInit, EventEmitter } from '@angular/core';
-import { switchMap, pluck, map, tap } from 'rxjs/operators';
+import { Component, AfterViewInit, EventEmitter, NgZone } from '@angular/core';
+import { switchMap, pluck, map, tap, filter } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 import { PlaylistsService } from '../../services/playlists.service';
-import { combineLatest } from 'rxjs';
+import { interval } from 'rxjs/internal/observable/interval';
+import { Observable, of } from 'rxjs';
+
+interface Song {
+  playlistId: number;
+  title: string;
+  youtubeId: string;
+  thumbnail: string;
+  channelTitle: string;
+  id: number;
+}
+
+interface Playlist {
+  title: string;
+  songs: Song[];
+}
 
 @Component({
   selector: 'shuf-playlist-player-page',
@@ -11,47 +26,60 @@ import { combineLatest } from 'rxjs';
   styleUrls: ['./playlist-player-page.component.scss']
 })
 export class PlaylistPlayerPageComponent implements AfterViewInit {
-
-  fetchPlaylist = new EventEmitter();
-  playerLoaded = new EventEmitter<YT.Player>();
-  selectedSong = new EventEmitter<string>();
-
-  playlist = this.fetchPlaylist
-    .asObservable()
-    .pipe(
-      switchMap((playlistId) => this.playlistsService.get(playlistId)),
-      tap(playlist => this.changeSong(playlist.songs[0].youtubeId))
-    );
-
-  playlistId = this.route.paramMap
-    .pipe(
-      pluck('params', 'playlistId'),
-      map((playlistId: any) => parseInt(playlistId))
-    );
+  playlist: Playlist;
+  isPlaying = true;
+  player: YT.Player;
+  progress: Observable<number>;
 
   constructor(
     private readonly playlistsService: PlaylistsService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly ngZone: NgZone
   ) { }
 
   ngAfterViewInit(): void {
-    this.playlistId
-      .subscribe(playlistId => {
-        this.fetchPlaylist.emit(playlistId);
+    this.route.paramMap
+      .subscribe(params => {
+        this.playlistsService
+          .get(params.get('playlistId'))
+          .subscribe(playlist => this.playlist = playlist);
       });
-    combineLatest(
-      this.playerLoaded.asObservable(),
-      this.selectedSong.asObservable()
-    ).subscribe(
-      ([player, videoId]) => player.loadVideoById(videoId)
+  }
+
+  changeSong(index: number) {
+    const {songs, title} = this.playlist;
+    this.playlist = { title , songs: [...songs.slice(index, songs.length), ...songs.slice(0, index)]};
+  }
+
+  playerHasLoaded(player: YT.Player) {
+    this.player = player;
+    this.progress = interval(500).pipe(
+      filter(() => {
+        return this.player.getDuration() !== 0;
+      }),
+      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100)
     );
+
+    player.addEventListener('onStateChange', (event: any) => {
+      this.ngZone.run(() => {
+        if (event.data === 0) {
+          this.changeSong(1);
+        }
+        if (event.data === 1) {
+          this.isPlaying = true;
+        }
+        if (event.data === 2) {
+          this.isPlaying = false;
+        }
+      });
+     });
   }
 
-  changeSong(youtubeId) {
-    this.selectedSong.emit(youtubeId);
-  }
-
-  playerHasLoaded(player) {
-    this.playerLoaded.emit(player);
+  togglePlayer() {
+    if (this.isPlaying) {
+      this.player.pauseVideo();
+    } else {
+      this.player.playVideo();
+    }
   }
 }

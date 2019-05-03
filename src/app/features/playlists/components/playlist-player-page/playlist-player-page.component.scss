@@ -11,3 +11,14 @@
 mat-list-item {
     height: 112px !important;
 }
+
+.player {
+    background: rgba($color: #000000, $alpha: 0.15);
+    border-radius: 32px;
+}
+
+.play-button {
+    font-size: 40px;
+    width: 56px;
+    height: 56px;
+}
