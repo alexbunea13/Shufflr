@@ -11,7 +11,8 @@ import { PlaylistListComponent } from './components/playlist-list/playlist-list.
 import { PlaylistPlayerPageComponent } from './components/playlist-player-page/playlist-player-page.component';
 
 @NgModule({
-  declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistPageComponent, PlaylistsPageComponent, PlaylistListComponent, PlaylistPlayerPageComponent],
+  declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistPageComponent,
+     PlaylistsPageComponent, PlaylistListComponent, PlaylistPlayerPageComponent],
   imports: [
     SharedModule,
     PlaylistsRoutingModule
