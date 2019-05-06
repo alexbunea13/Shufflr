@@ -3,7 +3,6 @@
   <mat-list mat-table>
     <mat-list-item [ngClass]="{player: first}" *ngFor="let song of playlist.songs; let first = first; let index = index;">
       <youtube-player *ngIf="first"
-        hidden
         [videoId]="song.youtubeId"
         [playerVars]="{ 'autoplay': 1 }"
         (ready)="playerHasLoaded($event);">

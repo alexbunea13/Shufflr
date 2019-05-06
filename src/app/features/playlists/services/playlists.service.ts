@@ -33,16 +33,4 @@ export class PlaylistsService {
       .http
       .get(`/api/playlists/${playlistId}`);
   }
-
-  getPlaylistSongs(playlistId): Observable<any> {
-    return this
-      .http
-      .get(`/api/playlists/${playlistId}/songs`)
-      .pipe(
-        map((response: any) => response.items
-          .map(songsId => (
-            {
-              id: songsId.youtubeId
-            }))));
-  }
 }
