@@ -4,10 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './components/root/app.component';
 import { SharedModule } from '../shared/shared.module';
+import { SearchBarComponent } from '../core/components/search-bar/search-bar.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SearchBarComponent],
   imports: [
     RouterModule,
     SharedModule,

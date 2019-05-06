@@ -1,0 +1,13 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+    <form (submit)="search(searchBox.value)">
+      <mat-form-field id="search-bar">
+          <input #searchBox="ngModel"
+              ngModel matInput
+              name="searchedText"
+              placeholder="Search">
+        </mat-form-field>
+      <mat-icon>search</mat-icon>
+    </form>
+  </mat-toolbar-row>
+</mat-toolbar>
