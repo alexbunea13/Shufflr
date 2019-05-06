@@ -2,4 +2,7 @@
     <mat-card-header>
         <mat-card-title>{{ name }}</mat-card-title>
     </mat-card-header>
+    <mat-card-actions>
+        <button mat-button color="primary" [routerLink]="[id, 'player']">Explore</button>
+    </mat-card-actions>
 </mat-card>
