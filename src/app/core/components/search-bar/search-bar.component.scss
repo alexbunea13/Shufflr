@@ -1,0 +1,11 @@
+.logo-icon {
+    padding-right: 32px;
+}
+
+::ng-deep .mat-autocomplete-panel{
+    overflow: hidden !important;
+}
+
+mat-form-field {
+    min-width: 300px;
+}

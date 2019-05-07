@@ -1,13 +1,25 @@
-<mat-toolbar color="accent">
+<mat-toolbar color="primary">
   <mat-toolbar-row>
-    <form (submit)="search(searchBox.value)">
-      <mat-form-field id="search-bar">
+    <mat-icon class="logo-icon" matPrefix>music_note</mat-icon>
+      <form #form="ngForm" (submit)="search(searchBox.value)">
+        <mat-form-field floatLabel="never">
           <input #searchBox="ngModel"
-              ngModel matInput
+              [ngModel]="searchedText" matInput
+              (ngModelChange)="conditionalSearch($event)"
+              [matAutocomplete]="auto"
               name="searchedText"
-              placeholder="Search">
+              placeholder="search">
+          <button matSuffix mat-icon-button (onclick)="search(searchBox.value)"><mat-icon>search</mat-icon></button>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="optionChoosed($event.option.value.id,form);" >
+            <mat-option
+              *ngFor='let match of matching | async'
+              [value]="match">
+              {{ match.title }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
-      <mat-icon>search</mat-icon>
-    </form>
+      </form>
   </mat-toolbar-row>
 </mat-toolbar>
