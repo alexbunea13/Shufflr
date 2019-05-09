@@ -1,0 +1,50 @@
+[matListAvatar] {
+    height: 80px !important;
+    width: 80px !important;
+}
+
+mat-list-item {
+    height: 112px !important;
+}
+.list {
+    .list-item {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 16px;
+        &:not(.player){
+            padding: 0 16px;
+        }
+
+        .preview {
+            display: flex;
+            width: 125px;
+            height: 125px;
+            overflow: hidden;
+            border-radius: 63px;
+            margin-right: 16px;
+            img{
+                margin-left: -50%;
+            }
+        }
+        .body {
+            display: flex;
+            flex-direction: column;
+            [mat-button],[mat-icon-button] {
+                margin-right: 8px;
+            }
+            h3 {
+                margin-top: 16px;
+            }
+            p, .song-buttons{
+                margin-top: 8px;
+            }
+            h3, p, .song-buttons {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+shuf-player {
+    display: flex;
+}

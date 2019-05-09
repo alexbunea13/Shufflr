@@ -1,0 +1,30 @@
+  <youtube-player
+    [videoId]="youtubeId"
+    [playerVars]="{ 'autoplay': 1 }"
+    (ready)="playerHasLoaded($event);">
+  </youtube-player>
+  <img [src]="thumbnail">
+  <div class="details">
+    <h3 matLine>{{ title }}</h3>
+    <p matLine>{{ channelTitle }}</p>
+    <mat-progress-bar matLine [value]="progress | async" mode="determinate"></mat-progress-bar>
+    <button
+    mat-icon-button class="play-button"
+    (click)="changeSong(-1)">
+    <mat-icon [inline]="true">skip_previous</mat-icon>
+  </button>
+  <button
+    mat-icon-button class="play-button"
+    (click)="togglePlayer()">
+    <mat-icon [inline]="true" *ngIf="isPlaying;else pause" >pause_circle_filled</mat-icon>
+    <ng-template #pause>
+      <mat-icon [inline]="true">play_circle_filled</mat-icon>
+    </ng-template>
+  </button>
+  <button
+    mat-icon-button class="play-button"
+    (click)="changeSong(1)">
+    <mat-icon [inline]="true">skip_next</mat-icon>
+  </button>
+  </div>
+  
