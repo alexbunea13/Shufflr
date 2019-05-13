@@ -38,4 +38,16 @@ export class PlaylistsService {
       .http
       .get(`/api/playlists/${playlistId}`);
   }
+
+  addRating(playlistId, value): Observable<any> {
+    return this
+      .http
+      .post(`api/playlists/${playlistId}/ratings`, {playlistId, value});
+  }
+
+  getRatings(playlistId): Observable<any> {
+    return this
+      .http
+      .get(`api/playlists/${playlistId}/ratings`);
+  }
 }
