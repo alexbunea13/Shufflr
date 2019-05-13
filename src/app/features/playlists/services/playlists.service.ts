@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +25,12 @@ export class PlaylistsService {
     return this
       .http
       .get('/api/playlists');
+  }
+
+  filter(q: string): Observable<any> {
+    return this
+      .http
+      .get('/api/playlists?q=' + q);
   }
 
   get(playlistId): Observable<any> {
