@@ -1,8 +1,22 @@
-import { Component, AfterViewInit, EventEmitter } from '@angular/core';
-import { switchMap, pluck, map } from 'rxjs/operators';
+import { Component, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { PlaylistsService } from '../../services/playlists.service';
+
+interface Song {
+  playlistId: number;
+  title: string;
+  youtubeId: string;
+  thumbnail: string;
+  channelTitle: string;
+  id: number;
+}
+
+interface Playlist {
+  title: string;
+  songs: Song[];
+}
 
 @Component({
   selector: 'shuf-playlist-player-page',
@@ -10,28 +24,20 @@ import { PlaylistsService } from '../../services/playlists.service';
   styleUrls: ['./playlist-player-page.component.scss']
 })
 export class PlaylistPlayerPageComponent implements AfterViewInit {
+  playlist: Playlist;
+  isPlaying = true;
 
-  fetchPlaylist = new EventEmitter();
-
-  playlist = this.fetchPlaylist
-    .asObservable()
-    .pipe(switchMap((playlistId) => this.playlistsService.get(playlistId)));
-
-  playlistId = this.route.paramMap
-    .pipe(
-      pluck('params', 'playlistId'),
-      map((playlistId: any) => parseInt(playlistId))
-    );
-
-    constructor(
+  constructor(
     private readonly playlistsService: PlaylistsService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
   ) { }
 
   ngAfterViewInit(): void {
-    this.playlistId
-      .subscribe(playlistId => {
-        this.fetchPlaylist.emit(playlistId);
+    this.route.paramMap
+      .subscribe(params => {
+        this.playlistsService
+          .get(params.get('playlistId'))
+          .subscribe(playlist => this.playlist = playlist);
       });
   }
 }

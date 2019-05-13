@@ -9,9 +9,12 @@ import { NewPlaylistPageComponent } from './components/new-playlist-page/new-pla
 import { PlaylistsPageComponent } from './components/playlists-page/playlists-page.component';
 import { PlaylistListComponent } from './components/playlist-list/playlist-list.component';
 import { PlaylistPlayerPageComponent } from './components/playlist-player-page/playlist-player-page.component';
+import { PlayerListComponent } from './components/player-list/player-list.component';
+import { PlayerComponent } from './components/player/player.component';
 
 @NgModule({
-  declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistPageComponent, PlaylistsPageComponent, PlaylistListComponent, PlaylistPlayerPageComponent],
+  declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistPageComponent,
+     PlaylistsPageComponent, PlaylistListComponent, PlaylistPlayerPageComponent, PlayerListComponent, PlayerComponent],
   imports: [
     SharedModule,
     PlaylistsRoutingModule
