@@ -21,6 +21,12 @@ export class PlaylistsService {
     .post(`/api/playlists/${playlistId}/songs`, {playlistId, ...song});
   }
 
+  addGenre(playlistId: number, genre): Observable<any> {
+    return this
+      .http
+      .post(`/api/playlists/${playlistId}/genres`, {playlistId, availableGenresId: genre.id, name: genre.name});
+  }
+
   getAll(): Observable<any> {
     return this
       .http
@@ -37,5 +43,29 @@ export class PlaylistsService {
     return this
       .http
       .get(`/api/playlists/${playlistId}`);
+  }
+
+  getAllGenres(q): Observable<any> {
+    return this
+      .http
+      .get('api/availableGenres?q=' + q);
+  }
+
+  getPlaylistGenres(playlistId): Observable<any> {
+    return this
+      .http
+      .get(`api/playlists/${playlistId}/genres`);
+  }
+
+  removeGenre(genre): Observable<any> {
+    return this
+      .http
+      .delete(`api/genres/${genre.id}`);
+  }
+
+  removeSong(songId): Observable<any> {
+    return this
+      .http
+      .delete(`api/songs/${songId}`);
   }
 }

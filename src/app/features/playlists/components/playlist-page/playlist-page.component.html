@@ -2,18 +2,49 @@
     <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
         <input matInput name="title" [ngModel]="playlist.title"/>
-        <mat-icon matSuffix>library_music</mat-icon>
+        <mat-icon matSuffix color="primary">library_music</mat-icon>
     </mat-form-field>
   <form #form="ngForm">
     <mat-form-field appearance="fill">
+      <mat-label>Tag a genre</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let genre of playlist.genres"
+                  [removable]="true" (removed)=removeGenre(genre)>
+          {{genre.name}}
+          <mat-icon color="primary" matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      <input
+        #searchGenreControl="ngModel"
+        matInput ngModel
+        placeholder="New genre..."
+        name="name"
+        (matChipInputTokenEnd)="reset(chipList)"
+        [matAutocomplete]="auto1"
+        [matChipInputFor]="chipList"
+        [matChipInputAddOnBlur]="true"
+        (ngModelChange)="searchGenre($event)"/>
+        <mat-icon color="primary" matSuffix>extension</mat-icon>
+      <mat-autocomplete
+        #auto1="matAutocomplete"
+        (optionSelected)="addGenre($event.option.value, searchGenreControl)">
+          <mat-option
+            *ngFor='let matchingGenre of matchingGenres | async'
+            [value]="matchingGenre"
+            [disabled]="tagIsIncluded(playlist.genres,matchingGenre.id)">
+            {{matchingGenre.name}}
+          </mat-option>
+      </mat-autocomplete>
+      </mat-chip-list>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Song</mat-label>
       <input
-        #searchSongControl ="ngModel"
+        #searchSongControl="ngModel"
         matInput ngModel
         name="title" placeholder="Add Song"
         [matAutocomplete]="auto"
         (ngModelChange)="searchSong($event)"/>
-      <mat-icon matSuffix>add</mat-icon>
+      <mat-icon color="primary" matSuffix>add</mat-icon>
       <mat-autocomplete
         #auto="matAutocomplete"
         autoActiveFirstOption
@@ -27,6 +58,6 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <shuf-song-list [songs]="playlist.songs">
+  <shuf-song-list [songs]="playlist.songs" (removeSong)="removeSong($event)">
   </shuf-song-list>
 </div>

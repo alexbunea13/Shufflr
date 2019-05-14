@@ -1,5 +1,8 @@
 {
     "/api/*": "$1",
-    "/playlists/:playlistId": "/playlists/:playlistId?_embed=songs",
-    "/playlists/:playlistId/songs": "/songs?playlistId=:playlistId"
+    "/availableGenres": "/availableGenres",
+    "/playlists/:playlistId": "/playlists/:playlistId?_embed=songs&_embed=genres",
+    "/playlists/:playlistId/songs": "/songs?playlistId=:playlistId",
+    "/playlists/:playlistId/genres": "/genres?playlistId=:playlistId",
+    "/playlists/:playlistId/genres/:id": "/genres?playlistId=:playlistId&id=:id"
 }
