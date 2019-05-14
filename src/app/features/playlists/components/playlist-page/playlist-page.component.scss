@@ -7,3 +7,11 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+mat-chip-list {
+    margin-bottom: 24px;
+}
+
+.mat-chip.mat-standard-chip {
+    color: rgb(21, 100, 192);
+}

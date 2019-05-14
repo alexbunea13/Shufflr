@@ -1,6 +1,9 @@
 <mat-list mat-table>
   <h3 mat-subheader>Songs</h3>
   <mat-list-item *ngFor="let song of songs">
-    <h3 mat-line>{{ song.title }}</h3>
+    <img matListAvatar src="{{song.thumbnail}}">
+    <h3 matLine>{{ song.title }}</h3>
+    <button mat-button (click)=remove(song)><mat-icon>delete</mat-icon></button>
+    <mat-divider color="accent"></mat-divider>
   </mat-list-item>
 </mat-list>
