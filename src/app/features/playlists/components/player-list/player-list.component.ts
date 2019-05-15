@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
-import { interval } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {moveItemInArray, CdkDragDrop} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'shuf-player-list',
@@ -24,5 +23,9 @@ export class PlayerListComponent {
     songs.splice(index, 1);
     songs.splice(offset, 0, selected);
     this.playlist = { title , songs };
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.playlist.songs, event.previousIndex, event.currentIndex);
   }
 }

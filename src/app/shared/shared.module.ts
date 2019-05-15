@@ -5,11 +5,12 @@ import {MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule,
    MatListModule, MatTableModule, MatCardModule, MatAutocompleteModule,
     MatProgressBarModule, MatToolbarModule, MatChipsModule} from '@angular/material';
 import {NgxYoutubePlayerModule} from 'ngx-youtube-player';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const MODULES = [CommonModule, FormsModule, MatFormFieldModule,
    MatInputModule, MatIconModule, MatButtonModule, MatListModule,
     MatTableModule, MatCardModule, MatAutocompleteModule, NgxYoutubePlayerModule,
-    MatProgressBarModule, MatToolbarModule, MatChipsModule];
+    MatProgressBarModule, MatToolbarModule, MatChipsModule, DragDropModule];
 @NgModule({
   declarations: [],
   imports: [MODULES],
