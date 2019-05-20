@@ -1,25 +1,34 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <mat-icon class="logo-icon" matPrefix>music_note</mat-icon>
-      <form #form="ngForm" (submit)="search(searchBox.value)">
-        <mat-form-field floatLabel="never">
-          <input #searchBox="ngModel"
-              [ngModel]="searchedText" matInput
-              (ngModelChange)="conditionalSearch($event)"
-              [matAutocomplete]="auto"
-              name="searchedText"
-              placeholder="search">
-          <button matSuffix mat-icon-button (onclick)="search(searchBox.value)"><mat-icon>search</mat-icon></button>
-          <mat-autocomplete
-            #auto="matAutocomplete"
-            (optionSelected)="optionChoosed($event.option.value.id,form);" >
-            <mat-option
-              *ngFor='let match of matching | async'
-              [value]="match">
-              {{ match.title }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </form>
+    <h5 matLine>ShufflR</h5>
+    <button (click)="navigateToHomePage()" matLine mat-button>
+      <mat-icon matLine>home</mat-icon>
+    </button>
+    <button (click)="navigateToPlaylistsPage()" mat-button>
+      Playlists
+    </button>
+    <button (click)="navigateToCreatePage()" mat-button>
+      Create
+    </button>
+    <form class="search-form" #form="ngForm" (submit)="search(searchBox.value)">
+      <mat-form-field floatLabel="never">
+        <input #searchBox="ngModel"
+            [ngModel]="searchedText" matInput
+            (ngModelChange)="conditionalSearch($event)"
+            [matAutocomplete]="auto"
+            name="searchedText"
+            placeholder="search">
+        <button matSuffix mat-icon-button (onclick)="search(searchBox.value)"><mat-icon>search</mat-icon></button>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="optionChoosed($event.option.value.id,form);" >
+          <mat-option
+            *ngFor='let match of matching | async'
+            [value]="match">
+            {{ match.title }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
   </mat-toolbar-row>
 </mat-toolbar>

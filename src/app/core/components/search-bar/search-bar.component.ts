@@ -55,4 +55,16 @@ export class SearchBarComponent implements AfterViewInit {
     this.router.navigate(['playlists', playlistId, 'player']);
     form.reset();
   }
+
+  navigateToPlaylistsPage() {
+    this.router.navigate(['playlists'], { queryParams: {q: ''}});
+  }
+
+  navigateToCreatePage() {
+    this.router.navigate(['playlists', 'new']);
+  }
+
+  navigateToHomePage() {
+    this.router.navigate(['']);
+  }
 }
