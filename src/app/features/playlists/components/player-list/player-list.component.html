@@ -29,8 +29,10 @@
         [channelTitle]="song.channelTitle"
         [youtubeId]="song.youtubeId"
         (next)="changeSong(1)"
+        (shuffle)="shuffle()"
         (previous)="changeSong(-1)"
-        [isPlaying]="isPlaying">
+        [isPlaying]="isPlaying"
+        [isShuffling]="isShuffling">
       </shuf-player>
     </ng-container>
   </div>

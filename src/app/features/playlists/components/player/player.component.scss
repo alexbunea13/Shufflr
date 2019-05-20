@@ -5,6 +5,26 @@
     height: 56px;
 };
 
+.shuffle-button {
+    float:right;
+    width: 112px;
+    height: 56px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background: #bbdefb;
+    border-radius: 8px 16px 16px 0;
+}
+
+.shuffled-button {
+    float:right;
+    width: 112px;
+    height: 56px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background: #1564c0;
+    border-radius: 8px 16px 16px 0;
+}
+
   youtube-player {
     width: 0;
     height: 0;
@@ -22,8 +42,8 @@ img{
 .details {
     margin-top:16px;
     margin-left: 16px;
-    mat-progress-bar {
-        width: 750px;
+    mat-slider {
+        width: 800px;
         margin-right: 16px;
     }
     button{

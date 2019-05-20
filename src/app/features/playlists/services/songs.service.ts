@@ -33,7 +33,8 @@ export class SongsService {
             {
               title: video.snippet.title,
               youtubeId: video.id.videoId,
-              thumbnail: video.snippet.thumbnails.medium.url
+              thumbnail: video.snippet.thumbnails.medium.url,
+              channelTitle: video.snippet.channelTitle
             })
           )
         ),

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, NgZone, Output, EventEmitter } from '@angular/core';
+import { Component, Input, NgZone, Output, EventEmitter } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, takeUntil, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'shuf-player',
@@ -11,8 +11,10 @@ export class PlayerComponent {
 
   @Input() isPlaying;
   @Input() youtubeId;
+  @Input() isShuffling;
   @Output() next = new EventEmitter<number>();
   @Output() previous = new EventEmitter<number>();
+  @Output() shuffle = new EventEmitter<any>();
   @Input() channelTitle;
   @Input() title;
   @Input() thumbnail;
@@ -20,10 +22,19 @@ export class PlayerComponent {
 
   player: YT.Player;
   progress: Observable<number>;
+  sliderChangedEventEmitter = new EventEmitter();
+  shuffleStatus = false;
+  shuffleText = '';
 
   constructor(
     private readonly ngZone: NgZone
-  ) { }
+  ) {
+    if (this.isShuffling) {
+      this.shuffleText = 'unShuffle';
+    } else {
+      this.shuffleText = 'Shuffle it';
+    }
+  }
 
   changeSong(index: number) {
     if (index === 1) {
@@ -41,13 +52,35 @@ export class PlayerComponent {
     }
   }
 
+  toggleShuffle() {
+    if (this.isShuffling) {
+      this.shuffle.emit();
+    } else {
+      this.shuffle.emit();
+    }
+  }
+
+  sliderChange() {
+    this.sliderChangedEventEmitter.emit();
+  }
+
+  sliderChanged(songProcent) {
+    this.player.seekTo(parseInt(songProcent.currentTarget.lastChild.textContent, 10) * this.player.getDuration() / 100, true);
+    this.progress = interval(500).pipe(
+      startWith(parseInt(songProcent.currentTarget.lastChild.textContent, 10)),
+      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
+      takeUntil(this.sliderChangedEventEmitter)
+    );
+  }
+
   playerHasLoaded(player: YT.Player) {
     this.player = player;
     this.progress = interval(500).pipe(
       filter(() => {
         return this.player.getDuration() !== 0;
       }),
-      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100)
+      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
+      takeUntil(this.sliderChangedEventEmitter)
     );
 
     player.addEventListener('onStateChange', (event: any) => {
@@ -62,6 +95,6 @@ export class PlayerComponent {
           this.isPlaying = false;
         }
       });
-     });
+    });
   }
 }
