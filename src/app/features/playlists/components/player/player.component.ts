@@ -22,18 +22,11 @@ export class PlayerComponent {
 
   player: YT.Player;
   progress: Observable<number>;
-  sliderChangedEventEmitter = new EventEmitter();
-  shuffleStatus = false;
-  shuffleText = '';
+  private stopProgress = new EventEmitter();
 
   constructor(
     private readonly ngZone: NgZone
   ) {
-    if (this.isShuffling) {
-      this.shuffleText = 'unShuffle';
-    } else {
-      this.shuffleText = 'Shuffle it';
-    }
   }
 
   changeSong(index: number) {
@@ -60,17 +53,18 @@ export class PlayerComponent {
     }
   }
 
-  sliderChange() {
-    this.sliderChangedEventEmitter.emit();
+  slideBegin() {
+    this.stopProgress.emit();
   }
 
   sliderChanged(songProcent) {
-    this.player.seekTo(parseInt(songProcent.currentTarget.lastChild.textContent, 10) * this.player.getDuration() / 100, true);
-    this.progress = interval(500).pipe(
-      startWith(parseInt(songProcent.currentTarget.lastChild.textContent, 10)),
-      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
-      takeUntil(this.sliderChangedEventEmitter)
-    );
+      this.stopProgress.emit();
+      this.player.seekTo(songProcent * this.player.getDuration() / 100, true);
+      this.progress = interval(500).pipe(
+        startWith(songProcent),
+        map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
+        takeUntil(this.stopProgress)
+      );
   }
 
   playerHasLoaded(player: YT.Player) {
@@ -80,7 +74,7 @@ export class PlayerComponent {
         return this.player.getDuration() !== 0;
       }),
       map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
-      takeUntil(this.sliderChangedEventEmitter)
+      takeUntil(this.stopProgress)
     );
 
     player.addEventListener('onStateChange', (event: any) => {

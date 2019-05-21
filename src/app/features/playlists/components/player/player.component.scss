@@ -5,27 +5,22 @@
     height: 56px;
 };
 
-.shuffle-button {
-    float:right;
-    width: 112px;
+.shuffle-play-button {
+    font-size: 40px;
+    width: 56px;
     height: 56px;
-    margin-right: 16px;
     margin-bottom: 16px;
-    background: #bbdefb;
-    border-radius: 8px 16px 16px 0;
 }
 
-.shuffled-button {
-    float:right;
-    width: 112px;
+.shuffling-play-button {
+    font-size: 40px;
+    width: 56px;
     height: 56px;
-    margin-right: 16px;
+    color: #1564c0;
     margin-bottom: 16px;
-    background: #1564c0;
-    border-radius: 8px 16px 16px 0;
 }
 
-  youtube-player {
+youtube-player {
     width: 0;
     height: 0;
     overflow: hidden;
