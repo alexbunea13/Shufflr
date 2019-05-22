@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'shuf-song-list',
@@ -8,4 +8,10 @@ import { Component, Input } from '@angular/core';
 export class SongListComponent {
 
   @Input() songs;
+
+  @Output() removeSong = new EventEmitter<number>();
+
+  remove(song) {
+    this.removeSong.emit(song.id);
+  }
 }

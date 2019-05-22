@@ -21,7 +21,7 @@ export class NewPlaylistPageComponent implements OnInit {
       .pipe(
         switchMap((playlistName => this.playlistsService.add(playlistName)))
       )
-      .subscribe(() => this.router.navigate(['/playlists']));
+      .subscribe(playlist => this.router.navigate([`playlists/${playlist.id}`]));
    }
 
   ngOnInit(): void {
