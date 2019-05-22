@@ -9,23 +9,23 @@
       <mat-label>Tag a genre</mat-label>
       <mat-chip-list #chipList>
         <mat-chip *ngFor="let genre of playlist.genres"
-                  [removable]="true" (removed)=removeGenre(genre)>
+                  [removable]="true" (removed)="removeGenre(genre)">
           {{genre.name}}
           <mat-icon color="primary" matChipRemove>cancel</mat-icon>
         </mat-chip>
-      <input
-        #searchGenreControl="ngModel"
-        matInput ngModel
-        placeholder="New genre..."
-        name="name"
-        (matChipInputTokenEnd)="reset(chipList)"
-        [matAutocomplete]="auto1"
-        [matChipInputFor]="chipList"
-        [matChipInputAddOnBlur]="true"
-        (ngModelChange)="searchGenre($event)"/>
+        <input
+          #searchGenreControl="ngModel"
+          matInput ngModel
+          placeholder="New genre..."
+          name="name"
+          [matAutocomplete]="categoryAutoComplete"
+          [matChipInputFor]="chipList"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="reset(chipList)"
+          (ngModelChange)="searchGenre($event)"/>
         <mat-icon color="primary" matSuffix>extension</mat-icon>
       <mat-autocomplete
-        #auto1="matAutocomplete"
+        #categoryAutoComplete="matAutocomplete"
         (optionSelected)="addGenre($event.option.value, searchGenreControl)">
           <mat-option
             *ngFor='let matchingGenre of matchingGenres | async'
@@ -48,7 +48,7 @@
       <mat-autocomplete
         #auto="matAutocomplete"
         autoActiveFirstOption
-        (optionSelected)="addSong($event.option.value, searchSongControl);" >
+        (optionSelected)="addSong($event.option.value, searchSongControl)" >
           <mat-option
             *ngFor='let matchingSong of matchingSongs | async'
             [value]="matchingSong"

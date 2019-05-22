@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, EventEmitter } from '@angular/core';
-import { switchMap, combineLatest, pluck, map, debounceTime, tap } from 'rxjs/operators';
+import { switchMap, combineLatest, pluck, map, debounceTime, tap, withLatestFrom } from 'rxjs/operators';
 
 import { PlaylistsService } from '../../services/playlists.service';
 import { ActivatedRoute } from '@angular/router';
@@ -29,7 +29,7 @@ export class PlaylistPageComponent implements AfterViewInit {
   playlistId = this.route.paramMap
     .pipe(
       pluck('params', 'playlistId'),
-      map((playlistId: any) => parseInt(playlistId))
+      map((playlistId: any) => parseInt(playlistId, 10))
     );
 
   matchingSongs: Observable<any[]>;
@@ -42,21 +42,21 @@ export class PlaylistPageComponent implements AfterViewInit {
   ) {
     this.addSongEventEmitter.asObservable()
       .pipe(
-        combineLatest(this.playlistId),
+        withLatestFrom(this.playlistId),
         switchMap(([song, playlistId]) => this.playlistsService.addSong(playlistId, song))
       )
       .subscribe(song => this.fetchPlaylist.emit(song.playlistId));
 
     this.addGenreEventEmitter.asObservable()
       .pipe(
-        combineLatest(this.playlistId),
+        withLatestFrom(this.playlistId),
         switchMap(([genre, playlistId]) => this.playlistsService.addGenre(playlistId, genre))
       )
       .subscribe(genre => this.fetchPlaylist.emit(genre.playlistId));
 
     this.deleteGenreEventEmitter.asObservable()
       .pipe(
-        combineLatest(this.playlistId),
+        withLatestFrom(this.playlistId),
         switchMap(([genre]) => this.playlistsService.removeGenre(genre)),
       )
       .subscribe(() => this.playlistId
@@ -64,7 +64,7 @@ export class PlaylistPageComponent implements AfterViewInit {
 
     this.removeSongEventEmitter.asObservable()
       .pipe(
-        combineLatest(this.playlistId),
+        withLatestFrom(this.playlistId),
         switchMap(([songId]) => this.playlistsService.removeSong(songId))
       )
       .subscribe(() => this.playlistId
@@ -98,10 +98,6 @@ export class PlaylistPageComponent implements AfterViewInit {
     searchGenreControl.reset();
   }
 
-  removeGenre(genre) {
-    this.deleteGenreEventEmitter.emit(genre);
-  }
-
   searchSong(newTitle) {
     this.searchSongEventEmitter.emit(newTitle);
   }
@@ -122,6 +118,10 @@ export class PlaylistPageComponent implements AfterViewInit {
 
   reset(chipList) {
     chipList._chipInput._inputElement.value = '';
+  }
+
+  removeGenre(genre) {
+    this.deleteGenreEventEmitter.emit(genre);
   }
 
   removeSong(songId) {
