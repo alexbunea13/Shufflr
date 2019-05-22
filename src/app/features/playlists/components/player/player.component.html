@@ -1,13 +1,19 @@
   <youtube-player
     [videoId]="youtubeId"
-    [playerVars]="{ 'autoplay': 1 }"
-    (ready)="playerHasLoaded($event);">
+    [playerVars]="{ 'autoplay': 1 ,'origin':'http://localhost:4200'}"
+    (ready)="playerHasLoaded($event)">
   </youtube-player>
   <img [src]="thumbnail">
   <div class="details">
     <h3 matLine>{{ title }}</h3>
     <p matLine>{{ channelTitle }}</p>
-    <mat-progress-bar matLine [value]="progress | async" mode="determinate"></mat-progress-bar>
+    <mat-slider #slider color="primary" matLine min="0" max="100" step="0.5"
+      (slidestart)="slideBegin()"
+      (pointerdown)="togglePlayer()"
+      (pointerup)="togglePlayer()"
+      (valueChange)="sliderChanged(slider.value)"
+      (slideend)="sliderChanged(slider.value)"
+      [value]="progress | async"></mat-slider>
     <button
     mat-icon-button class="play-button"
     (click)="changeSong(-1)">
@@ -26,5 +32,7 @@
     (click)="changeSong(1)">
     <mat-icon [inline]="true">skip_next</mat-icon>
   </button>
+  <button [ngClass]="{true: 'shuffling-play-button', false: 'shuffle-play-button'}[isShuffling]" (click)="toggleShuffle()" mat-icon-button>
+    <mat-icon [inline]="true">shuffle</mat-icon>
+  </button>
   </div>
-  

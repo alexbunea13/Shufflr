@@ -5,7 +5,22 @@
     height: 56px;
 };
 
-  youtube-player {
+.shuffle-play-button {
+    font-size: 40px;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+}
+
+.shuffling-play-button {
+    font-size: 40px;
+    width: 56px;
+    height: 56px;
+    color: #1564c0;
+    margin-bottom: 16px;
+}
+
+youtube-player {
     width: 0;
     height: 0;
     overflow: hidden;
@@ -22,8 +37,8 @@ img{
 .details {
     margin-top:16px;
     margin-left: 16px;
-    mat-progress-bar {
-        width: 750px;
+    mat-slider {
+        width: 800px;
         margin-right: 16px;
     }
     button{

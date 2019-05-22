@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, NgZone, Output, EventEmitter } from '@angular/core';
+import { Component, Input, NgZone, Output, EventEmitter } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, takeUntil, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'shuf-player',
@@ -11,19 +11,23 @@ export class PlayerComponent {
 
   @Input() isPlaying;
   @Input() youtubeId;
-  @Output() next = new EventEmitter<number>();
-  @Output() previous = new EventEmitter<number>();
+  @Input() isShuffling;
   @Input() channelTitle;
   @Input() title;
   @Input() thumbnail;
+  @Output() next = new EventEmitter<number>();
+  @Output() previous = new EventEmitter<number>();
+  @Output() shuffle = new EventEmitter<any>();
 
 
   player: YT.Player;
   progress: Observable<number>;
+  private stopProgress = new EventEmitter();
 
   constructor(
     private readonly ngZone: NgZone
-  ) { }
+  ) {
+  }
 
   changeSong(index: number) {
     if (index === 1) {
@@ -41,13 +45,36 @@ export class PlayerComponent {
     }
   }
 
+  toggleShuffle() {
+    if (this.isShuffling) {
+      this.shuffle.emit();
+    } else {
+      this.shuffle.emit();
+    }
+  }
+
+  slideBegin() {
+    this.stopProgress.emit();
+  }
+
+  sliderChanged(songProcent) {
+      this.stopProgress.emit();
+      this.player.seekTo(songProcent * this.player.getDuration() / 100, true);
+      this.progress = interval(500).pipe(
+        startWith(songProcent),
+        map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
+        takeUntil(this.stopProgress)
+      );
+  }
+
   playerHasLoaded(player: YT.Player) {
     this.player = player;
     this.progress = interval(500).pipe(
       filter(() => {
         return this.player.getDuration() !== 0;
       }),
-      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100)
+      map(() => this.player.getCurrentTime() / this.player.getDuration() * 100),
+      takeUntil(this.stopProgress)
     );
 
     player.addEventListener('onStateChange', (event: any) => {
@@ -62,6 +89,6 @@ export class PlayerComponent {
           this.isPlaying = false;
         }
       });
-     });
+    });
   }
 }

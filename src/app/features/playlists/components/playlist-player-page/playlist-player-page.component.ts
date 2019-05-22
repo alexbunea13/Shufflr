@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, NgModule, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, Inject, NgModule, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { PlaylistsService } from '../../services/playlists.service';
@@ -30,11 +30,12 @@ interface Playlist {
   templateUrl: './playlist-player-page.component.html',
   styleUrls: ['./playlist-player-page.component.scss']
 })
-export class PlaylistPlayerPageComponent implements AfterViewInit {
+export class PlaylistPlayerPageComponent implements AfterViewInit{
   playlist: Playlist;
   isPlaying = true;
   playlistId: number;
   rating: number;
+  isShuffling = false;
   @ViewChild(FeedbackDirective)
   feedback: FeedbackDirective;
 
