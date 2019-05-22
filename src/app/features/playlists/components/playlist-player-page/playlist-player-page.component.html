@@ -1,5 +1,10 @@
 <div class="shuf-container" *ngIf="playlist">
-  <h1>{{playlist.title}}</h1>
+  <div class="title">
+    <h1>{{playlist.title}}</h1>
+    <button mat-button [shufFeedback]="playlistId" (ratingSelected)="addRating($event)" class="rating-button" color="primary">
+      {{rating | number:'1.1-2'}} <mat-icon>star</mat-icon>
+    </button>
+  </div>
     <shuf-player-list
       [playlist] = playlist
       [isPlaying]= isPlaying>

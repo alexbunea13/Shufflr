@@ -6,3 +6,12 @@
 mat-list-item {
     height: 112px !important;
 };
+
+.title{
+    display: flex;
+    align-items: center;
+}
+
+.rating-button {
+    margin-left: 8px;
+}

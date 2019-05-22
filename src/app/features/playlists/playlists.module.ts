@@ -11,10 +11,14 @@ import { PlaylistListComponent } from './components/playlist-list/playlist-list.
 import { PlaylistPlayerPageComponent } from './components/playlist-player-page/playlist-player-page.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
 import { PlayerComponent } from './components/player/player.component';
+import { FeedbackDirective } from './directives/feedback.directive';
+import { PlaylistFeedbackComponent } from './components/playlist-feedback/playlist-feedback.component';
 
 @NgModule({
+  entryComponents: [PlaylistFeedbackComponent],
   declarations: [PlaylistPageComponent, SongListComponent, NewPlaylistPageComponent,
-     PlaylistsPageComponent, PlaylistListComponent, PlaylistPlayerPageComponent, PlayerListComponent, PlayerComponent],
+     PlaylistsPageComponent, PlaylistListComponent, PlaylistPlayerPageComponent,
+      PlayerListComponent, PlayerComponent, FeedbackDirective, PlaylistFeedbackComponent],
   imports: [
     SharedModule,
     PlaylistsRoutingModule

@@ -1,5 +1,6 @@
 {
     "/api/*": "$1",
-    "/playlists/:playlistId": "/playlists/:playlistId?_embed=songs",
-    "/playlists/:playlistId/songs": "/songs?playlistId=:playlistId"
+    "/playlists/:playlistId": "/playlists/:playlistId?_embed=songs&_embed=ratings",
+    "/playlists/:playlistId/songs": "/songs?playlistId=:playlistId",
+    "/playlists/:playlistId/ratings": "/ratings?playlistId=:playlistId"
 }
