@@ -12,12 +12,12 @@ export class PlayerComponent {
   @Input() isPlaying;
   @Input() youtubeId;
   @Input() isShuffling;
-  @Output() next = new EventEmitter<number>();
-  @Output() previous = new EventEmitter<number>();
-  @Output() shuffle = new EventEmitter<any>();
   @Input() channelTitle;
   @Input() title;
   @Input() thumbnail;
+  @Output() next = new EventEmitter<number>();
+  @Output() previous = new EventEmitter<number>();
+  @Output() shuffle = new EventEmitter<any>();
 
 
   player: YT.Player;

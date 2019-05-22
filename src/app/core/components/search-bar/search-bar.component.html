@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <h5 matLine>ShufflR</h5>
-    <button (click)="navigateToHomePage()" matLine mat-button>
-      <mat-icon matLine>home</mat-icon>
+    <button (click)="navigateToHomePage()" mat-button>
+      ShufflR
+      <mat-icon>music_note</mat-icon>
     </button>
     <button (click)="navigateToPlaylistsPage()" mat-button>
       Playlists
@@ -10,25 +10,28 @@
     <button (click)="navigateToCreatePage()" mat-button>
       Create
     </button>
-    <form class="search-form" #form="ngForm" (submit)="search(searchBox.value)">
-      <mat-form-field floatLabel="never">
-        <input #searchBox="ngModel"
-            [ngModel]="searchedText" matInput
-            (ngModelChange)="conditionalSearch($event)"
-            [matAutocomplete]="auto"
-            name="searchedText"
-            placeholder="search">
-        <button matSuffix mat-icon-button (onclick)="search(searchBox.value)"><mat-icon>search</mat-icon></button>
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="optionChoosed($event.option.value.id,form);" >
-          <mat-option
-            *ngFor='let match of matching | async'
-            [value]="match">
-            {{ match.title }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
+    <div class="search-form">
+      <form #form="ngForm" (submit)="search(searchBox.value)">
+        <mat-form-field appearance="fill">
+          <mat-label>Search</mat-label>
+          <input #searchBox="ngModel"
+              [ngModel]="searchedText" matInput
+              (ngModelChange)="conditionalSearch($event)"
+              [matAutocomplete]="auto"
+              name="searchedText"
+              placeholder="Music, artists and more...">
+          <button matSuffix mat-icon-button (onclick)="search(searchBox.value)"><mat-icon>search</mat-icon></button>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="optionChoosed($event.option.value.id,form);" >
+            <mat-option
+              *ngFor='let match of matching | async'
+              [value]="match">
+              {{ match.title }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

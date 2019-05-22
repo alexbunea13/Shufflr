@@ -3,24 +3,26 @@
     [ngSwitch]="first"
     [ngClass]="{player: first}">
     <ng-container *ngSwitchCase="false">
-      <div class="preview">
-        <img [src]="song.thumbnail">
-      </div>
-      <div class="body">
-        <h3>{{ song.title }}</h3>
-        <p>{{ song.channelTitle }}</p>
-        <div class="song-buttons">
-          <button (click)="changeSong(index)"
-            mat-icon-button
-            color="primary">
-            <mat-icon>play_circle_filled</mat-icon>
-          </button>
-          <button (click)="offsetSong(index)"
-            mat-button
-            *ngIf="index !== 1"
-            color="primary">Queue</button>
+      <ng-container *ngIf="!isShuffling; else suffleMode">
+        <div class="preview">
+          <img [src]="song.thumbnail">
         </div>
-      </div>
+        <div class="body">
+          <h3>{{ song.title }}</h3>
+          <p>{{ song.channelTitle }}</p>
+          <div class="song-buttons">
+            <button (click)="changeSong(index)"
+              mat-icon-button
+              color="primary">
+              <mat-icon>play_circle_filled</mat-icon>
+            </button>
+            <button (click)="offsetSong(index)"
+              mat-button
+              *ngIf="index !== 1"
+              color="primary">Queue</button>
+          </div>
+        </div>
+      </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="true">
       <shuf-player

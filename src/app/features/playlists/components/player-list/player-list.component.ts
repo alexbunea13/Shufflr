@@ -1,6 +1,4 @@
-import { Component, OnInit, Input, NgZone, OnDestroy } from '@angular/core';
-import { interval } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'shuf-player-list',
@@ -16,17 +14,21 @@ export class PlayerListComponent {
   changeSong(index: number) {
     const { songs, title } = this.playlist;
     if (this.isShuffling) {
-      const swappedSongs = (songList, firstIndex, randomIndex) => songList[firstIndex] && songList[randomIndex] && [
-        ...songList.slice(0, firstIndex),
-        songList[randomIndex],
-        ...songList.slice(firstIndex + 1, randomIndex),
-        songList[firstIndex],
-        ...songList.slice(randomIndex + 1)
-      ] || songList;
-      this.playlist = { title, songs: swappedSongs(songs, 0, ( Math.floor(Math.random() * (songs.length)) + 1)) };
+      const randomNumber = (Math.floor(Math.random() * songs.length) + 1);
+      this.playlist = { title, songs: this.randomizeArray(songs, 0, randomNumber) || songs };
     } else {
       this.playlist = { title, songs: [...songs.slice(index, songs.length), ...songs.slice(0, index)] };
     }
+  }
+
+  randomizeArray(songList, firstIndex, randomIndex) {
+    return songList[firstIndex] && songList[randomIndex] && [
+      ...songList.slice(0, firstIndex),
+      songList[randomIndex],
+      ...songList.slice(firstIndex + 1, randomIndex),
+      songList[firstIndex],
+      ...songList.slice(randomIndex + 1)
+    ];
   }
 
   offsetSong(index: number, offset = 1) {
